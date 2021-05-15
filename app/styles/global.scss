@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --background: #232324;
+  --black: #201f1f;
+  --purple: #8752cc;
+  --gray: #b2b2b2;
+  --white: #fff;
+}
+
+body {
+  background-color: var(--background);
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  button {
+    cursor: pointer;
+  }
+}
+
+body,
+input,
+button {
+  font-weight: 400;
+  font-family: "Roboto", sans-serif;
+}
+
+// Font responsiveness adjustments
+@media (max-width: 1080px) {
+  html {
+    font-size: 93.75%;
+  }
+}
+
+@media (max-width: 780px) {
+  html {
+    font-size: 87.5%;
+  }
+}
