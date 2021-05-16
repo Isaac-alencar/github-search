@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import Head from "next/head";
 
 import api from "../services/api";
 
@@ -20,20 +21,25 @@ export default function Home() {
   }
 
   return (
-    <div className={styles.container}>
-      <img src="/assets/logo-vertical.svg" alt="Github search" />
-      <div className={styles.inputContainer}>
-        <input
-          type="text"
-          placeholder="Enter user name"
-          onChange={(e) => setInputValue(e.target.value)}
-          value={inputvalue}
-          required
-        />
-        <button type="button" onClick={(e) => handleSearchUser(e)}>
-          Search
-        </button>
+    <>
+      <Head>
+        <title>Github Search</title>
+      </Head>
+      <div className={styles.container}>
+        <img src="/assets/logo-vertical.svg" alt="Github search" />
+        <div className={styles.inputContainer}>
+          <input
+            type="text"
+            placeholder="Enter user name"
+            onChange={(e) => setInputValue(e.target.value)}
+            value={inputvalue}
+            required
+          />
+          <button type="button" onClick={(e) => handleSearchUser(e)}>
+            Search
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
