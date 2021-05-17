@@ -94,3 +94,21 @@ Discord: https://discord.gg/yvYXhGj <br>
 Linkedin: https://www.linkedin.com/company/devchallenge/<br>
 Twitter: https://twitter.com/dev_challenge<br>
 Instagram: https://www.instagram.com/devchallenge/<br>
+
+# Como rodar o projeto na sua máquina
+
+```bash
+# 1º passo
+   git clone https://github.com/Isaac-alencar/github-search.git path/to/your/dir
+   
+# 2º passo
+    cd path/to/your/dir
+    
+# 3º passo
+    # Para npm:
+    npm install && npm run dev
+    # ou para yarn:
+    yarn && yarn dev
+```
+
+
