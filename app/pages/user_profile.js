@@ -1,3 +1,7 @@
+import { useContext } from "react";
+import { UserProfileContext } from "../contexts/userProfileContext";
+
+import { useRouter } from "next/router";
 import Head from "next/head";
 
 import { RepositoryCard } from "../components/RepositoryCard";
@@ -17,6 +21,11 @@ import { Github } from "@styled-icons/icomoon/Github";
 import styles from "../styles/pages/UserProfile.module.scss";
 
 export default function UserProfile() {
+  const history = useRouter();
+
+  const { userProfileData } = useContext(UserProfileContext);
+  const { user, repos } = userProfileData;
+
   return (
     <>
       <Head>
@@ -25,31 +34,39 @@ export default function UserProfile() {
       <div className={styles.container}>
         <header>
           <img src="/assets/logo-horizontal.svg" alt="Github Search" />
-          <ArrowLeft color="var(--white)" height={40} width={40} />
+          <ArrowLeft
+            color="var(--white)"
+            height={40}
+            width={40}
+            onClick={() => history.push("/")}
+            style={{ cursor: "pointer" }}
+          />
         </header>
         <div className={styles.userInfoContainer}>
-          <img src="https://github.com/juniperlRails.png" alt="juniperlRails" />
+          <img src={user.avatar_url} alt={user.name} />
           <div className={styles.userProfileInfo}>
             <div>
-              <strong>juniperlRails</strong>
-              <span>@isac</span>
+              <strong>{user.name}</strong>
+              <span>
+                @{user.twitter_username || "No twitter account especified"}
+              </span>
             </div>
             <div className={styles.aboutUser}>
               <div>
                 <LocationOn color="var(--purple)" size={24} />
-                <span>Teresina - Brazil</span>
+                <span>{user.location}</span>
               </div>
               <div>
                 <Toolbox color="var(--purple)" size={24} />
-                <span>emprego</span>
+                <span>{user.company || "Company not especified"}</span>
               </div>
               <div>
                 <PeopleTeam color="var(--purple)" size={24} />
-                <span>Seguidores</span>
+                <span>{user.followers}</span>
               </div>
               <div>
                 <PeaopleTeamRegular color="var(--purple)" size={24} />
-                <span>Seguindo</span>
+                <span>{user.following}</span>
               </div>
               <div>
                 <Star color="var(--purple)" size={24} />
@@ -61,18 +78,37 @@ export default function UserProfile() {
             <span>Total Repositories</span>
             <span>
               <GitBranch size={25} color="var(--purple)" />
-              28
+              {user.public_repos}
             </span>
           </div>
         </div>
         <main className={styles.repositoriesList}>
-          <RepositoryCard />
-          <RepositoryCard />
-          <RepositoryCard />
+          {repos &&
+            repos.map((repo) => {
+              return (
+                <RepositoryCard
+                  key={repo.id}
+                  url={repo.html_url}
+                  stars={repo.stargazers_count}
+                  name={repo.name}
+                  description={repo.description}
+                  languages=""
+                  forks={repo.forks}
+                />
+              );
+            })}
         </main>
         <footer className={styles.footer}>
-          <Github color="var(--gray)" size={30} />
-          <LinkedinSquare color="var(--gray)" size={35} />
+          <Github
+            color="var(--gray)"
+            size={30}
+            onClick={() => window.open(user.html_url, "_blank")}
+          />
+          <LinkedinSquare
+            color="var(--gray)"
+            size={35}
+            onClick={() => window.open(user.blog, "_blank")}
+          />
         </footer>
       </div>
     </>
