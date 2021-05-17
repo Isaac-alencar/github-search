@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 import api from "../services/api";
 
@@ -11,12 +12,19 @@ export default function Home() {
   const [inputvalue, setInputValue] = useState("");
   const { setUserProfileData } = useContext(UserProfileContext);
 
+  const history = useRouter();
+
   async function handleSearchUser(event) {
     event.preventDefault();
 
-    const response = await api.get(`${inputvalue}`);
-    if (response.status === 200) {
-      setUserProfileData(response.data);
+    try {
+      const userInfo = await api.get(`/${inputvalue}`);
+      const reposInfo = await api.get(`/${inputvalue}/repos`);
+      setUserProfileData({ user: userInfo.data, repos: reposInfo.data });
+      history.push("user_profile");
+    } catch (error) {
+      alert("User not found");
+      console.log(error);
     }
   }
 
